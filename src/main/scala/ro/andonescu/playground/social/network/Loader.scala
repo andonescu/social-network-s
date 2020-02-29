@@ -1,11 +1,11 @@
-package ro.andonescu.playgroud.social.network
+package ro.andonescu.playground.social.network
 
 import io.circe.parser._
 import io.circe.{Json, ParsingFailure}
 
 import scala.io.Source
 
-object JsonLoader {
+object Loader {
 
   def inputData(pathToFile: String): scala.Either[ParsingFailure, Json] =
     parse(inputDataAsString(pathToFile))

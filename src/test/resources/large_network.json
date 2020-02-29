@@ -1,0 +1,26 @@
+[
+  {
+    "userA": "John",
+    "userB": "Bogdan"
+  },
+  {
+    "userA": "Carmen",
+    "userB": "Bogdan"
+  },
+  {
+    "userA": "Cornel",
+    "userB": "Carmen"
+  },
+  {
+    "userA": "John",
+    "userB": "Dan"
+  },
+  {
+    "userA": "Carmen",
+    "userB": "Alice"
+  },
+  {
+    "userA": "John",
+    "userB": "Bogdan"
+  }
+]
