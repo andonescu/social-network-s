@@ -1,7 +1,7 @@
 package ro.andonescu.playground.social.network
 
 import org.specs2.Specification
-import ro.andonescu.playground.social.network.Loader._
+import ro.andonescu.playground.social.network.loader.Loader._
 
 class LoaderTest extends Specification {
 

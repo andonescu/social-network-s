@@ -1,4 +1,7 @@
 import com.typesafe.scalalogging.Logger
+import io.circe.parser.decode
+import ro.andonescu.playground.social.network.loader.Loader
+import ro.andonescu.playground.social.network.model.Connection
 
 object Main {
 
@@ -11,10 +14,22 @@ object Main {
       return
     }
 
-    // read json data from the received file
-
+    resolveSocialNetwork(args(0))
   }
 
-  private def isExit(readline: String) =
-    readline.trim.toLowerCase == "exit"
+  private def resolveSocialNetwork(jsonFile: String) = {
+    import ro.andonescu.playground.social.network.model.LoaderJson._
+
+    // read json data from the received file
+    decode[Seq[Connection]](Loader.inputDataAsString(jsonFile)) match {
+
+      case Right(connections) =>
+        // connection graph can be properly assembled
+        println(connections)
+
+      case Left(err) =>
+        logger.error(err.getLocalizedMessage, err.fillInStackTrace())
+        println("Errors in reading the json data. Please check the input file.")
+    }
+  }
 }

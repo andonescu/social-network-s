@@ -23,5 +23,7 @@ libraryDependencies ++= Seq(
   "org.specs2" %% "specs2-core" % "4.7.0" % "test"
 )
 
+// graph library
+libraryDependencies += "org.scala-graph" %% "graph-core" % "1.13.2"
 
 scalacOptions in Test ++= Seq("-Yrangepos")

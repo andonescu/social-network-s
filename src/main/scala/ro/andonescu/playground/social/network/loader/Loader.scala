@@ -1,4 +1,4 @@
-package ro.andonescu.playground.social.network
+package ro.andonescu.playground.social.network.loader
 
 import io.circe.parser._
 import io.circe.{Json, ParsingFailure}
