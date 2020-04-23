@@ -1,9 +1,10 @@
 package ro.andonescu.playground.social.network
 
 import org.specs2.Specification
+import ro.andonescu.playground.social.network.helpers.ResourceLoader
 import ro.andonescu.playground.social.network.loader.Loader._
 
-class LoaderTest extends Specification {
+class LoaderTest extends Specification with ResourceLoader {
 
   def is =
     s2"""
@@ -19,8 +20,4 @@ class LoaderTest extends Specification {
 
   def corruptFile =
     inputData(pathToFile("corrupt_network_file.json")) should beLeft
-
-  private def pathToFile(name: String) =
-    getClass.getClassLoader.getResource(name).getPath
-
 }

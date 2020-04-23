@@ -33,6 +33,8 @@ So, only practicable algos on the graphs are suitable here.
 + everyone has only two connections (A ~ B ~ C ~ D ~ E)
 + + Bridge connection - An individual whose weak ties fill a structural hole, providing the only link between two individuals or clusters. 
 + we have not discussed about sizes. The algo/implementation works for small social networks.
++ time in which we need to compute
++ multiple possibilities to obtain the same result
 
 ## Input data
 
@@ -44,4 +46,4 @@ input data:
    	   "userB" : "Bogdan"
    }
 ]
-``````
+```
