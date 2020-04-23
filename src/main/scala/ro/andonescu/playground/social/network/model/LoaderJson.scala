@@ -4,6 +4,6 @@ import io.circe.Decoder
 import io.circe.generic.semiauto._
 
 object LoaderJson {
-  implicit val connectionDecoder: Decoder[Connection] = deriveDecoder[Connection]
+  implicit val connectionStringDecoder: Decoder[Connection[String]] = deriveDecoder[Connection[String]]
 }
 

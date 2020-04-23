@@ -1,3 +1,3 @@
 package ro.andonescu.playground.social.network.model
 
-case class Connection(userA: String, userB: String)
+case class Connection[N](userA: N, userB: N)

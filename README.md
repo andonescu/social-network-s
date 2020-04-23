@@ -14,14 +14,25 @@ The social network in the end represents a graph which consists of a set of vert
 
 2. What algorithm did you use to compute the shortest chain of friends?  What alternatives did you consider?  Why did you choose this algorithm over the alternatives?
 
-I see two alternatives: Dijkstra or A Star Algorithms. First one will give the expected result, when the second one will give us the best result in computer time.
+I will use a BFS algorithm, to go from node to node and validate/check all of the friends of the given node. One step at a time. 
+
+As an alternative, thinking at the best/quickest path between two points, initially I was thinking at A* algo, but thinking a little bit more on how to implement this over a social network (which is not a map in space) I got stuck. Too many problems, or future problems trying to implement something like this:
+
+- evaluation method (if we are close of not from the destination)
+- we could jump from fried to friend until the end of time...
+
+This kind of algo (Dijkstra & A*) are not suitable for this kind of job.
+
+So, only practicable algos on the graphs are suitable here.
 
 3. Please enumerate the test cases you considered and explain their relevance
+
++ should we consider the theorem that with a connection of 7 people, a person is connected with anyone from the world. 
 
 + everyone is connected with everyone 
 + everyone has only two connections (A ~ B ~ C ~ D ~ E)
 + + Bridge connection - An individual whose weak ties fill a structural hole, providing the only link between two individuals or clusters. 
-+ ???
++ we have not discussed about sizes. The algo/implementation works for small social networks.
 
 ## Input data
 

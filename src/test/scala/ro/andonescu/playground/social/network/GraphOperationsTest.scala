@@ -2,10 +2,9 @@ package ro.andonescu.playground.social.network
 
 import org.specs2.Specification
 import ro.andonescu.playground.social.network.model.Connection
-import scalax.collection.Graph
-import scalax.collection.GraphPredef._
+import scalax.collection.{Graph, GraphEdge}
 
-class GraphLoaderTest extends Specification {
+class GraphOperationsTest extends Specification {
 
   def is =
     s2"""
@@ -16,5 +15,6 @@ class GraphLoaderTest extends Specification {
   """
 
   def interpretConnections =
-    GraphLoader.interpret(List(Connection("A", "B"))) should beTheSameAs(Graph("A" ~ "B"))
+    GraphOperations.interpret(List(Connection("A", "B"), Connection("B", "C"))) should beEqualTo(Graph(GraphEdge.UnDiEdge("A", "B"), GraphEdge.UnDiEdge("B", "C")))
+
 }

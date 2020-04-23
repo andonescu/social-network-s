@@ -21,7 +21,7 @@ object Main {
     import ro.andonescu.playground.social.network.model.LoaderJson._
 
     // read json data from the received file
-    decode[Seq[Connection]](Loader.inputDataAsString(jsonFile)) match {
+    decode[Seq[Connection[String]]](Loader.inputDataAsString(jsonFile)) match {
 
       case Right(connections) =>
         // connection graph can be properly assembled
