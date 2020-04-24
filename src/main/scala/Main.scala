@@ -1,5 +1,6 @@
 import com.typesafe.scalalogging.Logger
 import io.circe.parser.decode
+import ro.andonescu.playground.social.network.GraphOperations
 import ro.andonescu.playground.social.network.loader.Loader
 import ro.andonescu.playground.social.network.model.Connection
 
@@ -26,6 +27,13 @@ object Main {
       case Right(connections) =>
         // connection graph can be properly assembled
         println(connections)
+
+        val graph = GraphOperations.interpret(connections)
+        val nodes = graph.nodes
+        // as demo purpose we will take / analyze the chain of friends between first and last & printed to stdout
+        println(s"The list of friends between ${nodes.head} & ${nodes.last} are : ${GraphOperations.chainOfFriendsBetween(nodes.head.value, nodes.last.value)(graph)}")
+
+        // TODO: additional validation to check that there are at least two persons.
 
       case Left(err) =>
         logger.error(err.getLocalizedMessage, err.fillInStackTrace())
