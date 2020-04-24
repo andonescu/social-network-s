@@ -32,6 +32,7 @@ object GraphOperations {
           val newMapSuccessors = headSuccessors.map(_ -> headPredecessorsWithIt).toMap
           iterateThroughFriends(tail ++ headSuccessors, predecessorsMap ++ newMapSuccessors)
         }
+        case _ => Seq.empty
       }
 
 

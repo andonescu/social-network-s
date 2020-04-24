@@ -16,6 +16,7 @@ class GraphOperationsTest extends Specification {
    chainOfFriendsBetween a three friends connected  A ~ B, B ~ C, C ~ A                     $chainOfFriendsBetweenConnectedFriends
    chainOfFriendsBetween a small list of friends A ~ B, B ~ C                               $chainOfFriendsBetweenSmallListOfFriends
    chainOfFriendsBetween a complex list of friends                                          $chainOfFriendsBetweenComplexSocialNetwork
+   chainOfFriendsBetween a clustered solution should be empty                               $chainOfFriendsBetweenClusters
   """
 
   def interpretConnections =
@@ -39,4 +40,17 @@ class GraphOperationsTest extends Specification {
         GraphEdge.~("F", "M")
       )
     ) should beEqualTo(Seq("A", "B", "E", "F", "M"))
+
+  def chainOfFriendsBetweenClusters =
+
+    chainOfFriendsBetween("A", "M")(
+      Graph(GraphEdge.~("A", "B"),
+        GraphEdge.~("B", "C"),
+        GraphEdge.~("B", "D"),
+        GraphEdge.~("B", "E"),
+        GraphEdge.~("E", "F"),
+        GraphEdge.~("E", "C"),
+        GraphEdge.~("N", "M")
+      )
+    ) should beEmpty
 }

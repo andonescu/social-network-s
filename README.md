@@ -36,6 +36,8 @@ So, only practicable algos on the graphs are suitable here.
 + time in which we need to compute
 + multiple possibilities to obtain the same result
 
++ even each person has friend/s, there can be a possibility of clustering so that, for a given input : start & end, there is no solution.
+
 ## Input data
 
 input data:
