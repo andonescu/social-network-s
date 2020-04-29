@@ -18,9 +18,12 @@ object GraphOperations {
   def chainOfFriendsBetween[N](start: N, end: N)(context: Graph[N, GraphEdge.UnDiEdge]): Seq[N] = {
 
     val startNode = context.find(start).get
+    val successors = startNode.diSuccessors.toSeq
+
+    val friendsMap = collection.mutable.Map(successors.map(_ -> Seq(startNode)): _*)
 
     //1. go step by step, through all the `friends` of each node; a breadth-first search algorithm
-    def iterateThroughFriends(successors: Seq[context.NodeT], friendsMap: Map[context.NodeT, Seq[context.NodeT]]): Seq[context.NodeT] =
+    def iterateThroughFriends(successors: Seq[context.NodeT]): Seq[context.NodeT] =
       successors match {
         case head :: _ if head.value == end => friendsMap.get(head).get :+ head
         case head :: tail => {
@@ -28,18 +31,15 @@ object GraphOperations {
           val friendsNotVisited = head.diSuccessors.filterNot(friendsMap.contains(_))
           // for each new head successor we will add in the map the proper steps to get to it
           val pathThroughFriendsToHead = friendsMap.get(head).get :+ head
-          val newFriendsMap = friendsNotVisited.map(_ -> pathThroughFriendsToHead).toMap
-          iterateThroughFriends(tail ++ friendsNotVisited, friendsMap ++ newFriendsMap)
+          friendsMap ++=  friendsNotVisited.map(_ -> pathThroughFriendsToHead)
+          iterateThroughFriends(tail ++ friendsNotVisited)
         }
         case _ => Seq.empty
       }
 
-
     //2. TODO: further optimisation, start both ways (from the start point & end point) and see what matches appear
-    val successors = startNode.diSuccessors
-    val friendsMap = successors.map(_ -> Seq(startNode)).toMap
 
-    iterateThroughFriends(successors.toSeq, friendsMap).map(_.value)
+    iterateThroughFriends(successors).map(_.value)
   }
 
 }
