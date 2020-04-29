@@ -20,26 +20,26 @@ object GraphOperations {
     val startNode = context.find(start).get
 
     //1. go step by step, through all the `friends` of each node; a breadth-first search algorithm
-    def iterateThroughFriends(successors: Seq[context.NodeT], predecessorsMap: Map[context.NodeT, Seq[context.NodeT]]): Seq[context.NodeT] =
+    def iterateThroughFriends(successors: Seq[context.NodeT], friendsMap: Map[context.NodeT, Seq[context.NodeT]]): Seq[context.NodeT] =
       successors match {
-        case head :: _ if head.value == end => predecessorsMap.get(head).get :+ head
+        case head :: _ if head.value == end => friendsMap.get(head).get :+ head
         case head :: tail => {
           // get head successors which are not already present in our seq
-          val headSuccessors = head.diSuccessors.toSeq.filterNot(predecessorsMap.contains(_))
+          val friendsNotVisited = head.diSuccessors.filterNot(friendsMap.contains(_))
           // for each new head successor we will add in the map the proper steps to get to it
-          val headPredecessorsWithIt = predecessorsMap.get(head).get :+ head
-          val newMapSuccessors = headSuccessors.map(_ -> headPredecessorsWithIt).toMap
-          iterateThroughFriends(tail ++ headSuccessors, predecessorsMap ++ newMapSuccessors)
+          val pathThroughFriendsToHead = friendsMap.get(head).get :+ head
+          val newFriendsMap = friendsNotVisited.map(_ -> pathThroughFriendsToHead).toMap
+          iterateThroughFriends(tail ++ friendsNotVisited, friendsMap ++ newFriendsMap)
         }
         case _ => Seq.empty
       }
 
 
     //2. TODO: further optimisation, start both ways (from the start point & end point) and see what matches appear
-    val successors = startNode.diSuccessors.toSeq
-    val predecessorsMap = successors.map(_ -> Seq(startNode)).toMap
+    val successors = startNode.diSuccessors
+    val friendsMap = successors.map(_ -> Seq(startNode)).toMap
 
-    iterateThroughFriends(successors, predecessorsMap).map(_.value)
+    iterateThroughFriends(successors.toSeq, friendsMap).map(_.value)
   }
 
 }
