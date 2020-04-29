@@ -18,12 +18,11 @@ object GraphOperations {
   def chainOfFriendsBetween[N](start: N, end: N)(context: Graph[N, GraphEdge.UnDiEdge]): Seq[N] = {
 
     val startNode = context.find(start).get
-    val endNode = context.find(end).get
 
     //1. go step by step, through all the `friends` of each node; a breadth-first search algorithm
     def iterateThroughFriends(successors: Seq[context.NodeT], predecessorsMap: Map[context.NodeT, Seq[context.NodeT]]): Seq[context.NodeT] =
       successors match {
-        case head :: _ if head == endNode => predecessorsMap.get(head).get :+ endNode
+        case head :: _ if head.value == end => predecessorsMap.get(head).get :+ head
         case head :: tail => {
           // get head successors which are not already present in our seq
           val headSuccessors = head.diSuccessors.toSeq.filterNot(predecessorsMap.contains(_))
