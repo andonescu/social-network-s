@@ -4,6 +4,8 @@ import ro.andonescu.playground.social.network.model.Connection
 import scalax.collection.GraphPredef._
 import scalax.collection.{Graph, GraphEdge}
 
+import scala.annotation.tailrec
+
 object GraphOperations {
 
   /**
@@ -23,15 +25,18 @@ object GraphOperations {
     val friendsMap = collection.mutable.Map(successors.map(_ -> Seq(startNode)): _*)
 
     //1. go step by step, through all the `friends` of each node; a breadth-first search algorithm
+    @tailrec
     def iterateThroughFriends(successors: Seq[context.NodeT]): Seq[context.NodeT] =
       successors match {
-        case head :: _ if head.value == end => friendsMap.get(head).get :+ head
+        case head :: _ if head.value == end => friendsMap.get(head).getOrElse(Seq.empty) :+ head
         case head :: tail => {
           // get head successors which are not already present in our seq
           val friendsNotVisited = head.diSuccessors.filterNot(friendsMap.contains(_))
           // for each new head successor we will add in the map the proper steps to get to it
-          val pathThroughFriendsToHead = friendsMap.get(head).get :+ head
+          val pathThroughFriendsToHead = friendsMap.get(head).getOrElse(Seq.empty) :+ head
+          // global based knowledge, add the details about the new links
           friendsMap ++=  friendsNotVisited.map(_ -> pathThroughFriendsToHead)
+
           iterateThroughFriends(tail ++ friendsNotVisited)
         }
         case _ => Seq.empty
